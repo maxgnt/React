@@ -1,61 +1,27 @@
-import { useState } from "react";
+import todos from "../data/todos";
 
 export default function Todo() {
-  const [todos, setTodos] = useState<{ id: number; texte: string; fait: boolean }[]>([]);
-  const [input, setInput] = useState("");
-
-  const ajouterTodo = () => {
-    if (!input.trim()) return;
-    setTodos([...todos, { id: Date.now(), texte: input, fait: false }]);
-    setInput("");
-  };
-
-  const toggleEtat = (id: number) => {
-    setTodos(
-      todos.map((tache) =>
-        tache.id === id ? { ...tache, fait: !tache.fait } : tache
-      )
-    );
-  };
-
-  const supprimerTodo = (id: number) => {
-    setTodos(todos.filter((tache) => tache.id !== id));
-  };
-
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white p-6 rounded shadow">
-      <h2 className="text-xl font-bold mb-4 text-center">Ma Todo List</h2>
+    <div className="max-w-4xl mx-auto mt-10 bg-white p-6 rounded shadow">
+      <h2 className="text-2xl font-bold mb-6 text-center"> Liste des Todo</h2>
 
-      <div className="flex gap-2 mb-4">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 border rounded px-2 py-1"
-          placeholder="Ajouter une tâche"
-        />
-        <button
-          onClick={ajouterTodo}
-          className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
-        >
-          Ajouter
-        </button>
-      </div>
-
-      <ul>
+      <ul className="space-y-4">
         {todos.map((tache) => (
-          <li key={tache.id} className="flex justify-between items-center mb-2">
-            <span
-              className={`cursor-pointer ${tache.fait ? "line-through text-gray-400" : ""}`}
-              onClick={() => toggleEtat(tache.id)}
-            >
-              {tache.texte}
-            </span>
-            <button
-              onClick={() => supprimerTodo(tache.id)}
-              className="text-red-500 hover:text-red-700"
-            >
-              ✖
-            </button>
+          <li key={tache.id} className="border rounded p-4 hover:shadow">
+            <h3 className="text-lg font-semibold">{tache.title}</h3>
+            <p className="text-sm text-gray-600">{tache.description}</p>
+            <div className="text-sm text-gray-500 mt-2">
+              <strong>Catégorie :</strong> {tache.category} |{" "}
+              <strong>Priorité :</strong> {tache.priority} |{" "}
+              <strong>Date :</strong> {tache.dueDate}
+            </div>
+            <div className="mt-2 text-sm">
+              {tache.completed ? (
+                <span className="text-green-600 font-semibold"> Fait</span>
+              ) : (
+                <span className="text-red-600 font-semibold"> À faire</span>
+              )}
+            </div>
           </li>
         ))}
       </ul>
