@@ -1,30 +1,107 @@
-import todos from "../data/todos";
+import { useState } from "react";
+import initialTodos from "../data/todos";
 
 export default function Todo() {
-  return (
-    <div className="max-w-4xl mx-auto mt-10 bg-white p-6 rounded shadow">
-      <h2 className="text-2xl font-bold mb-6 text-center"> Liste des Todo</h2>
+  const [todos, setTodos] = useState(initialTodos);
 
-      <ul className="space-y-4">
+  const toggleEtat = (id: number) => {
+    setTodos(
+      todos.map((tache) =>
+        tache.id === id ? { ...tache, completed: !tache.completed } : tache
+      )
+    );
+  };
+
+  const modifierTache = (id: number, champ: string, valeur: string) => {
+    setTodos(
+      todos.map((tache) =>
+        tache.id === id ? { ...tache, [champ]: valeur } : tache
+      )
+    );
+  };
+
+  return (
+    <div className="max-w-7xl mx-auto mt-10 p-4">
+      <h1 className="text-2xl font-bold text-center mb-6"> Mes Todos</h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {todos.map((tache) => (
-          <li key={tache.id} className="border rounded p-4 hover:shadow">
-            <h3 className="text-lg font-semibold">{tache.title}</h3>
-            <p className="text-sm text-gray-600">{tache.description}</p>
-            <div className="text-sm text-gray-500 mt-2">
-              <strong>Catégorie :</strong> {tache.category} |{" "}
-              <strong>Priorité :</strong> {tache.priority} |{" "}
-              <strong>Date :</strong> {tache.dueDate}
+          <div
+            key={tache.id}
+            className="border rounded p-3 bg-white shadow text-sm space-y-2"
+          >
+         
+            <input
+              type="text"
+              value={tache.title}
+              onChange={(e) =>
+                modifierTache(tache.id, "title", e.target.value)
+              }
+              className="font-semibold w-full border-b pb-1 outline-none text-base"
+            />
+
+          
+            <textarea
+              value={tache.description}
+              onChange={(e) =>
+                modifierTache(tache.id, "description", e.target.value)
+              }
+              className="w-full border rounded p-1 text-sm"
+              rows={2}
+            />
+
+           
+            <div>
+              <label className="font-semibold mr-1">Priorité :</label>
+              <select
+                value={tache.priority}
+                onChange={(e) =>
+                  modifierTache(tache.id, "priority", e.target.value)
+                }
+                className="border rounded px-2 py-0.5"
+              >
+                <option value="low">Basse</option>
+                <option value="medium">Moyenne</option>
+                <option value="high">Haute</option>
+              </select>
             </div>
-            <div className="mt-2 text-sm">
-              {tache.completed ? (
-                <span className="text-green-600 font-semibold"> Fait</span>
-              ) : (
-                <span className="text-red-600 font-semibold"> À faire</span>
-              )}
+
+          
+            <div>
+              <label className="font-semibold mr-1">Date limite :</label>
+              <input
+                type="date"
+                value={tache.dueDate}
+                onChange={(e) =>
+                  modifierTache(tache.id, "dueDate", e.target.value)
+                }
+                className="border rounded px-2 py-0.5"
+              />
             </div>
-          </li>
+
+           
+            <div>
+              <span className="font-semibold">Catégorie :</span> {tache.category}
+            </div>
+
+        
+            <div>
+              <span className="font-semibold">Tags :</span>{" "}
+              {tache.tags.join(", ")}
+            </div>
+
+           
+            <button
+              onClick={() => toggleEtat(tache.id)}
+              className={`w-full mt-2 px-2 py-1 rounded text-white text-sm ${
+                tache.completed ? "bg-green-500" : "bg-gray-500"
+              }`}
+            >
+              {tache.completed ? "Terminée" : "A faire"}
+            </button>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

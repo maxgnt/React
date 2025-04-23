@@ -41,7 +41,7 @@ export default function Formulaire() {
 
       {envoi && (
         <p className="mt-4 text-green-600 text-center">
-          ✅ Tâche ajoutée avec succès !
+           Tâche ajoutée avec succès !
         </p>
       )}
     </form>
