@@ -53,7 +53,7 @@ const Login: React.FC = () => {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="text-center text-3xl font-bold text-gray-900">Connexion</h2>
-          <p className="text-center text-sm text-gray-600">
+          <p className="text-center text-sm text-gray-600 p-4">
             Entrez un nom d'utilisateur libre et le mot de passe <strong>password</strong>
           </p>
         </div>
@@ -83,7 +83,7 @@ const Login: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 ${
+            className={`w-full bg-black text-white py-2 rounded hover:bg-gray-500 ${
               isLoading ? 'opacity-70 cursor-not-allowed' : ''
             }`}
           >
