@@ -1,49 +1,41 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-export default function Formulaire() {
-  const [nom, setNom] = useState('');
-  const [description, setDescription] = useState('');
-  const [envoi, setEnvoi] = useState(false); 
+export default function Formulaire () {
+  const [title, setTitle] = useState ("");
+  const [descirption, setDescription] = useState ("");
+  const [priority, setPriority] = useState ("low,medium,high");
+  const [dueDate, setDueDate] = useState ("");
+  const [category, setCategory] = useState ("");
+  const [tags, setTags] = useState ([""]);
+  const [envoi, setEnvoi] = useState (false);
 
+  
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setEnvoi(true);
+    e.preventDefault ();
+
+    setEnvoi(true); 
+
+    setTitle ("");
+    setDescription ("");
+    setPriority ("low,medium,high");
+    setDueDate ("");
+    setCategory ("");
+    setTags ("");
   };
 
+
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 bg-white p-6 rounded shadow">
-      <h2 className="text-xl font-bold mb-4 text-center">Tâche</h2>
+    <form onSubmit= {handleSubmit} className="max-w-md mx-auto mt-6 bg-white p-6 rounded shadow">
+      
+      <h2 className="text-1xl font-bold mb-4 text-center">Ajouter une tâche</h2>
 
       <input 
-        type="text"
-        placeholder="Nom de la tâche"
-        value={nom}
-        onChange={(e) => setNom(e.target.value)}
-        className="flex-1 border rounded px-2 py-1 mb-4 w-full"
-        required
-      />
+      type="text"
+      placeholder="Nom de la tâche"
+      ></input>
 
-      <input 
-        type="text"
-        placeholder="Description de la tâche"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className="flex-1 border rounded px-2 py-1 mb-4 w-full"
-        required
-      />
-
-      <button
-        type="submit"
-        className="bg-green-500 text-white px-3 py-2 rounded hover:bg-green-600 w-full"
-      >
-        Ajouter
-      </button>
-
-      {envoi && (
-        <p className="mt-4 text-green-600 text-center">
-           Tâche ajoutée avec succès
-        </p>
-      )}
-    </form>
-  );
+      
+      
+      </form>
+  )
 }
